@@ -28,7 +28,7 @@ jobs:
             docker push dancegep/my-k8s-app:latest
   kubernetes-deploy:
     docker:
-      - image: circleci/kubernetes:1.21.0
+    - image: bitnami/kubectl:latest
     steps:
       - checkout
       - run:
