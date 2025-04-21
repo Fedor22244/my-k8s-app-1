@@ -11,9 +11,10 @@ jobs:
           command: npm install
   docker-build:
     docker:
-      - image: circleci/docker:20.10.7
+      - image: docker:20.10
     steps:
       - checkout
+      - setup_remote_docker
       - run:
           name: Construire l'image Docker
           command: docker build -t my-node-app:latest .
@@ -21,8 +22,8 @@ jobs:
           name: Se connecter à Docker Hub
           command: echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
           environment:
-            DOCKER_USERNAME: <votre_utilisateur>
-            DOCKER_PASSWORD: <votre_mot_de_passe>
+            DOCKER_USERNAME: $DOCKER_USERNAME
+            DOCKER_PASSWORD: $DOCKER_PASSWORD
       - run:
           name: Pousser l'image Docker
           command: docker push my-node-app:latest
