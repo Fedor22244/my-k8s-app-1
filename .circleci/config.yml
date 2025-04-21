@@ -34,4 +34,4 @@ jobs:
       - run:
           name: Deploy to Kubernetes
           command: |
-            kubectl set image deployment/my-k8s-deployment my-container=dancegep/my-k8s-app:latest
+            kubectl set image deployment/my-k8s-deployment my-k8s-app=dancegep/my-k8s-app:latest
