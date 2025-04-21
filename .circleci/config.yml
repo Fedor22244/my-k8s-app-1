@@ -17,13 +17,15 @@ jobs:
       - setup_remote_docker
       - run:
           name: Construire l'image Docker
-          command: docker build -t my-node-app:latest .
+          command: docker build -t dancegep/my-k8s-app:latest .
       - run:
           name: Se connecter à Docker Hub
           command: docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
       - run:
           name: Pousser l'image Docker
-          command: docker push dancegep/my-k8s-app:latest
+          command: |
+            docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
+            docker push dancegep/my-k8s-app:latest
   kubernetes-deploy:
     docker:
       - image: circleci/kubernetes:1.21.0
