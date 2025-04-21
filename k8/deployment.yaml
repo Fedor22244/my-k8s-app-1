@@ -21,7 +21,7 @@ spec:
         circleci.com/version: 1.0.0
     spec:
       containers:
-      - name: my-container
+      - name: my-k8s-app
         image: dancegep/my-k8s-app:latest
         ports:
         - containerPort: 3000
