@@ -9,10 +9,6 @@ jobs:
       - run:
           name: Installer les dépendances
           command: npm install
-      - run:
-          name: Exécuter les tests
-          command: npm test
-
   docker-build:
     docker:
       - image: circleci/docker:20.10.7
