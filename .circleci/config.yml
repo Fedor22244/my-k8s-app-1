@@ -27,12 +27,12 @@ jobs:
     steps:
       - checkout
       - kubernetes/install_kubectl
+      - kubernetes/install_kubeconfig:
+          kubeconfig: KUBECONFIG_DATA
       - run:
-          name: Chemin
+          name: test
           command: |
             kubectl get nodes
- #     - kubernetes/install_kubeconfig:
- #         kubeconfig: KUBECONFIG_DATA
       - kubernetes/create_or_update_resource:
           get_rollout_status: true
           resource_file_path: ./k8/deployment.yaml
