@@ -42,8 +42,6 @@ jobs:
           command: |
             mkdir -p ~/.kube
             echo -n $KUBECONFIG_CONTENT >> ~/.kube/config
-            echo $KUBECONFIG_CONTENT
-            echo -n $KUBECONFIG_CONTENT| base64
             cat ~/.kube/config
       - run:
           name: Montre les config kubenetes
