@@ -27,6 +27,12 @@ jobs:
     steps:
       - checkout
       - kubernetes/install_kubectl
+      - run:
+          name: Chemin
+          command: |
+            ls
+            cd ~
+            ls
       - kubernetes/install_kubeconfig:
           kubeconfig: KUBECONFIG_DATA
       - kubernetes/create_or_update_resource:
