@@ -31,12 +31,19 @@ jobs:
     - image: bitnami/kubectl:latest
     working_directory: ~/project
     steps:
+      - run:
+          name: Vérifier les permissions du répertoire
+          command: ls -ld /project && mkdir -p /project && ls -ld /project
       - checkout
       - run:
           name: Configurer Kubernetes
           command: |
             mkdir -p ~/.kube
             echo "$KUBECONFIG" > ~/.kube/config
+            export KUBECONFIG=~/.kube/config
+      - run:
+          name: Vérifier la connexion au cluster
+          command: kubectl cluster-info
       - run:
           name: Appliquer la configuration
           command: kubectl apply -f deployment.yaml
