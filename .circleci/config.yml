@@ -41,7 +41,7 @@ jobs:
           name: Configurer Kubernetes
           command: |
             mkdir -p ~/.kube
-            echo -n $KUBECONFIG_CONTENT| base64 -d >> ~/.kube/config
+            echo -n $KUBECONFIG_CONTENT >> ~/.kube/config
             echo $KUBECONFIG_CONTENT
             echo -n $KUBECONFIG_CONTENT| base64
             cat ~/.kube/config
