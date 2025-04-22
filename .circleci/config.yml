@@ -44,7 +44,7 @@ jobs:
             echo "$KUBECONFIG" > ~/.kube/config
             export KUBECONFIG=~/.kube/config
       - run:
-          name: Vérifier la connexion au cluster
+          name: Vérifier la connexion au cluster test
           command: kubectl cluster-info
       - run:
           name: Deploy to Kubernetes
