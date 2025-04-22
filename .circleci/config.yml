@@ -32,6 +32,10 @@ jobs:
             chmod +x ./kubectl
             mv ./kubectl /usr/local/bin/kubectl
       - run:
+          name: Deploy to Kubernetes
+          command: |
+            kubectl set image deployment/my-k8s-deployment my-k8s-app=dancegep/my-k8s-app:latest
+      - run:
           name: Restart pods
           command: |
             kubectl rollout restart deployment my-k8s-deployment
