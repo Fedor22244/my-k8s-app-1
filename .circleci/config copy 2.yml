@@ -1,0 +1,79 @@
+version: 2.1
+
+jobs:
+  build:
+    docker:
+      - image: circleci/node:16 # Version de Node.js à utiliser
+    steps:
+      - checkout # Récupère le code source
+      - run:
+          name: Installer les dépendances
+          command: npm install
+  docker-build:
+    docker:
+      - image: docker:20.10
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run:
+          name: Construire l'image Docker
+          command: docker build -t dancegep/my-k8s-app:latest .
+      - run:
+          name: Se connecter à Docker Hub
+          command: docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
+      - run:
+          name: Pousser l'image Docker
+          command: |
+            docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
+            docker push dancegep/my-k8s-app:latest
+  kubernetes-deploy:
+    docker:
+    - image: python:3.8
+    steps:
+      - checkout
+      - run:
+          name: Install kubectl
+          command: |
+            curl -LO "https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl"
+            chmod +x ./kubectl
+            mv ./kubectl /usr/local/bin/kubectl
+      - run:
+          name: Deploy to Kubernetes
+          command: 
+            kubectl set image deployment/my-k8s-deployment my-k8s-app=dancegep/my-k8s-app:latest
+      - run:
+          name: Appliquer la configuration
+          command: kubectl apply -f deployment.yaml
+
+    # docker:
+#     - image: bitnami/kubectl:latest
+#     working_directory: ~/project
+#     steps:
+#       - run:
+#           name: Vérifier les permissions du répertoire
+#           command: ls -ld /project && mkdir -p /project && ls -ld /project
+#       - checkout
+#       - run:
+#           name: Configurer Kubernetes
+#           command: |
+#             mkdir -p ~/.kube
+#             echo "$KUBECONFIG" > ~/.kube/config
+#             export KUBECONFIG=~/.kube/config
+#       - run:
+#           name: Vérifier la connexion au cluster
+#           command: kubectl cluster-info
+#       - run:
+#           name: Appliquer la configuration
+#           command: kubectl apply -f deployment.yaml
+
+workflows:
+  version: 2
+  build-deploy:
+    jobs:
+      - build
+      - docker-build:
+          requires:
+            - build
+      - kubernetes-deploy:
+          requires:
+            - docker-build
