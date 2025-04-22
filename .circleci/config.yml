@@ -38,6 +38,12 @@ jobs:
             chmod +x ./kubectl
             mv ./kubectl /usr/local/bin/kubectl
       - run:
+          name: Configurer Kubernetes
+          command: |
+            mkdir -p ~/.kube
+            echo "$KUBECONFIG" > ~/.kube/config
+            export KUBECONFIG=~/.kube/config
+      - run:
           name: Deploy to Kubernetes
           command: |
             kubectl set image deployment/my-k8s-deployment my-k8s-app=dancegep/my-k8s-app:latest
