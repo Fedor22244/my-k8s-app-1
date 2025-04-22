@@ -23,6 +23,9 @@ jobs:
   deploy:
     docker:
       - image: python:3.8
+    parameters:
+      namespace:
+        type: string
     steps:
       - checkout
       - run:
@@ -34,11 +37,12 @@ jobs:
       - run:
           name: Deploy to Kubernetes
           command: |
-            kubectl set image deployment/my-k8s-deployment my-k8s-app=dancegep/my-k8s-app:latest
+            kubectl set image deployment/my-k8s-deployment my-k8s-app=dancegep/my-k8s-app:latest -n <<parameters.namespace>>
       - run:
           name: Restart pods
           command: |
-            kubectl rollout restart deployment my-k8s-deployment
+            kubectl rollout restart deployment my-k8s-deployment -n <<parameters.namespace>>
+
 workflows:
   version: 2
   build-deploy:
@@ -47,3 +51,13 @@ workflows:
       - deploy:
           requires:
             - build
+          matrix:
+            parameters:
+              namespace: ["dev", "qa", "preprod", "prod"]
+          filters:
+            branches:
+              only:
+                - dev
+                - qa
+                - preprod
+                - prod
