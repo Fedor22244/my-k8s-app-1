@@ -42,7 +42,8 @@ jobs:
           command: |
             mkdir -p ~/.kube
             echo -n $KUBECONFIG_CONTENT >> ~/.kube/config
-            export KUBECONFIG=~/.kube/config
+            export KUBECONFIG = $KUBECONFIG_CONTENT 
+            $KUBECONFIG = $KUBECONFIG_CONTENT 
             cat ~/.kube/config            
       - run:
           name: Montre les config kubenetes
@@ -50,6 +51,15 @@ jobs:
       - run:
           name: Montre les config kubenetes
           command: echo $KUBECONFIG_CONTENT
+      - run:
+          name: Montre le path
+          command: realpath ~
+      - run:
+          name: Montre les config kubenetes 2
+          command: kubectl config get-contexts
+      - run:
+          name: Vérifier la connexion au cluster test
+          command: kubectl cluster-info
       - run:
           name: Deploy to Kubernetes
           command: 
