@@ -43,6 +43,10 @@ jobs:
             mkdir -p ~/.kube
             echo "$KUBECONFIG_CONTENT" > ~/.kube/config
             export KUBECONFIG=~/.kube/config
+            cat ~/.kube/config
+      - run:
+          name: Montre les config kubenetes
+          command: echo $KUBECONFIG
       - run:
           name: Montre les config kubenetes
           command: echo $KUBECONFIG
