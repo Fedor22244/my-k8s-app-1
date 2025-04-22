@@ -18,7 +18,7 @@ jobs:
             docker build -t dancegep/my-k8s-app:latest .
       - run:
           name: test2
-          command: echo $CIRCLE_SHA1
+          command: echo $KUBECONFIG_DATA
       - run:
           name: Push Docker Image
           command: |
@@ -30,6 +30,8 @@ jobs:
     steps:
       - checkout
       - kubernetes/install_kubectl
+      - kubernetes/install_kubeconfig:
+          kubeconfig: KUBECONFIG_DATA
       - run:
           name: Deploy to Kubernetes
           command: |
