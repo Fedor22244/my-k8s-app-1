@@ -42,7 +42,6 @@ jobs:
           command: |
             mkdir -p ~/.kube
             echo -n $KUBECONFIG_CONTENT >> ~/.kube/config
-            export KUBECONFIG = $KUBECONFIG_CONTENT 
             $KUBECONFIG = $KUBECONFIG_CONTENT 
             cat ~/.kube/config            
       - run:
