@@ -52,7 +52,7 @@ jobs:
           command: echo $KUBECONFIG_CONTENT
       - run:
           name: Montre root-kube/config
-          command: cat /root/.kube/config
+          command: cat -A /root/.kube/config
       - run:
           name: Montre la config
           command: kubectl config view
