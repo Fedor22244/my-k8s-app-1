@@ -41,8 +41,7 @@ jobs:
           name: Configurer Kubernetes
           command: |
             mkdir -p ~/.kube
-            echo -n $KUBECONFIG_CONTENT >> ~/.kube/config
-            export KUBECONFIG=~/.kube/config
+            cp ./kubeconfig.yaml ~/.kube/config
             cat ~/.kube/config            
       - run:
           name: Montre les config kubenetes
