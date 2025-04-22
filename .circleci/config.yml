@@ -54,6 +54,9 @@ jobs:
           name: Montre le path
           command: realpath ~
       - run:
+          name: Montre la config
+          command: kubectl config view
+      - run:
           name: Montre les config kubenetes 2
           command: kubectl config get-contexts
       - run:
