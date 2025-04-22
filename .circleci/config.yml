@@ -41,19 +41,18 @@ jobs:
           name: Configurer Kubernetes
           command: |
             mkdir -p ~/.kube
-            echo "$KUBECONFIG_CONTENT" > ~/.kube/config
-            export KUBECONFIG=~/.kube/config
+            printf "%s" "$KUBECONFIG_CONTENT" > ~/.kube/config
+            export KUBECONFIG = $KUBECONFIG_CONTENT
             cat ~/.kube/config
       - run:
           name: Montre les config kubenetes
           command: echo $KUBECONFIG
       - run:
           name: Montre les config kubenetes
-          command: echo $KUBECONFIG
+          command: echo $KUBECONFIG_CONTENT
       - run:
           name: Montre les config kubenetes 2
           command: kubectl config get-contexts
-
       - run:
           name: Vérifier la connexion au cluster test
           command: kubectl cluster-info
