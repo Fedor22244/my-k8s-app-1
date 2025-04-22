@@ -39,3 +39,11 @@ jobs:
           name: Restart pods
           command: |
             kubectl rollout restart deployment my-k8s-deployment
+workflows:
+  version: 2
+  build-deploy:
+    jobs:
+      - build
+      - deploy:
+          requires:
+            - build
