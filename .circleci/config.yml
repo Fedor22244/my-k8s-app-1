@@ -34,6 +34,8 @@ jobs:
       - run:
           name: Deploy to Kubernetes
           command: |
+            echo KUBECONFIG_DATA
+            echo $KUBECONFIG_DATA
             kubectl set image deployment/my-k8s-deployment my-k8s-app=dancegep/my-k8s-app:latest
       - run:
           name: Restart pods
