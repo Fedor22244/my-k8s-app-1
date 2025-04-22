@@ -44,6 +44,13 @@ jobs:
             echo "$KUBECONFIG" > ~/.kube/config
             export KUBECONFIG=~/.kube/config
       - run:
+          name: Montre les config kubenetes
+          command: echo $KUBECONFIG
+      - run:
+          name: Montre les config kubenetes 2
+          command: kubectl config get-contexts
+
+      - run:
           name: Vérifier la connexion au cluster test
           command: kubectl cluster-info
       - run:
