@@ -30,10 +30,7 @@ jobs:
       - run:
           name: Chemin
           command: |
-            ls
-            echo "dan"
-            cd ~
-            ls
+            kubectl get nodes
  #     - kubernetes/install_kubeconfig:
  #         kubeconfig: KUBECONFIG_DATA
       - kubernetes/create_or_update_resource:
