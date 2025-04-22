@@ -38,30 +38,6 @@ jobs:
             chmod +x ./kubectl
             mv ./kubectl /usr/local/bin/kubectl
       - run:
-          name: Configurer Kubernetes
-          command: |
-            mkdir -p ~/.kube
-            cp kubeconfig.yaml ~/.kube/config
-            cat ~/.kube/config            
-      - run:
-          name: Montre les config kubenetes
-          command: echo $KUBECONFIG
-      - run:
-          name: Montre les config kubenetes
-          command: echo $KUBECONFIG_CONTENT
-      - run:
-          name: Montre root-kube/config
-          command: cat -A /root/.kube/config
-      - run:
-          name: Montre la config
-          command: kubectl config view
-      - run:
-          name: Montre les config kubenetes 2
-          command: kubectl config get-contexts
-      - run:
-          name: Vérifier la connexion au cluster test
-          command: kubectl cluster-info
-      - run:
           name: Deploy to Kubernetes
           command: 
             kubectl set image deployment/my-k8s-deployment my-k8s-app=dancegep/my-k8s-app:latest
