@@ -17,7 +17,7 @@ jobs:
           command: |
             docker build -t dancegep/my-k8s-app:latest .
       - run:
-          name: test2
+          name: test
           command: echo $KUBECONFIG_DATA
       - run:
           name: Push Docker Image
