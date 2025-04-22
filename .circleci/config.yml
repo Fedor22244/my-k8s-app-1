@@ -40,8 +40,9 @@ jobs:
       - run:
           name: Configurer Kubernetes
           command: |
-            export KUBECONFIG=$KUBECONFIG_CONTENT
-            echo $KUBECONFIG_CONTENT
+            mkdir -p ~/.kube
+            echo "$KUBECONFIG_CONTENT" > ~/.kube/config
+            export KUBECONFIG=~/.kube/config
       - run:
           name: Montre les config kubenetes
           command: echo $KUBECONFIG
