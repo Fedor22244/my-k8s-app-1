@@ -51,14 +51,8 @@ jobs:
           name: Montre les config kubenetes
           command: echo $KUBECONFIG_CONTENT
       - run:
-          name: Montre les config kubenetes 2
-          command: kubectl config get-contexts
-      - run:
-          name: Vérifier la connexion au cluster test
-          command: kubectl cluster-info
-      - run:
           name: Deploy to Kubernetes
-          command: |
+          command: 
             kubectl set image deployment/my-k8s-deployment my-k8s-app=dancegep/my-k8s-app:latest
       - run:
           name: Appliquer la configuration
