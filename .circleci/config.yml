@@ -41,7 +41,7 @@ jobs:
           name: Configurer Kubernetes
           command: |
             mkdir -p ~/.kube
-            cp ./kubeconfig.yaml ~/.kube/config
+            cp kubeconfig.yaml ~/.kube/config
             cat ~/.kube/config            
       - run:
           name: Montre les config kubenetes
