@@ -37,15 +37,14 @@ jobs:
             curl -LO "https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl"
             chmod +x ./kubectl
             mv ./kubectl /usr/local/bin/kubectl
-      - kubernetes/install_kubeconfig:
-          kubeconfig: $KUBECONFIG_CONTENT
-#      - run:
-#          name: Configurer Kubernetes
-#          command: |
-#            mkdir -p ~/.kube
-#            printf "%s" "$KUBECONFIG_CONTENT" > ~/.kube/config
-#            export KUBECONFIG = $KUBECONFIG_CONTENT
-#            cat ~/.kube/config
+      - run:
+          name: Configurer Kubernetes
+          command: |
+            mkdir -p ~/.kube
+            echo -n $KUBECONFIG_CONTENT| base64 -d >> ~/.kube/config
+            echo $KUBECONFIG_CONTENT
+            echo -n $KUBECONFIG_CONTENT| base64
+            cat ~/.kube/config
       - run:
           name: Montre les config kubenetes
           command: echo $KUBECONFIG
