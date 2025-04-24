@@ -27,16 +27,13 @@ jobs:
     steps:
       - checkout
       - kubernetes/install_kubectl
- #     - kubernetes/install_kubeconfig:
- #         kubeconfig: KUBECONFIG_DATA
+      - kubernetes/install_kubeconfig:
+          kubeconfig: KUBECONFIG_DATA
       - run:
           name: test
           command: |
-            kubectl config set-context kubernetes-admin@kubernetes --cluster=kubernetes --user=kubernetes-admin
-            kubectl config use-context kubernetes-admin@kubernetes
             kubectl config get-contexts
             kubectl config view
-            kubectl config view --minify
       - kubernetes/create_or_update_resource:
           get_rollout_status: true
           resource_file_path: ./k8/deployment.yaml
