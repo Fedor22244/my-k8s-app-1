@@ -23,8 +23,7 @@ jobs:
             docker push dancegep/my-k8s-app:latest
   deploy:
     docker:
-#     - image: cimg/base:stable
-      - image: ubuntu-2004:current
+    - image: cimg/base:stable
     steps:
       - checkout
       - kubernetes/install_kubectl
