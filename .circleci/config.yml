@@ -1,6 +1,7 @@
 version: 2.1
 orbs:
   node: circleci/node@5.1.0
+  kubernetes: circleci/kubernetes@2.0.0
 jobs:
   build:
     docker:
@@ -22,16 +23,36 @@ jobs:
             docker push dancegep/my-k8s-app:latest
   deploy:
     docker:
-      - image: python:3.8
+      - image: cimg/base:stable
     steps:
       - checkout
+      - kubernetes/install_kubectl
+ #     - kubernetes/install_kubeconfig:
+ #         kubeconfig: KUBECONFIG_DATA
       - run:
-          name: Install kubectl
+          name: test
           command: |
-            curl -LO "https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl"
-            chmod +x ./kubectl
-            mv ./kubectl /usr/local/bin/kubectl
+            kubectl get nodes
+      - kubernetes/create_or_update_resource:
+          get_rollout_status: true
+          resource_file_path: ./k8/deployment.yaml
+          resource_name: deployment/my-k8s-deployment
+          show_kubectl_command: true
       - run:
           name: Deploy to Kubernetes
           command: |
             kubectl set image deployment/my-k8s-deployment my-k8s-app=dancegep/my-k8s-app:latest
+      - run:
+          name: Restart pods
+          command: |
+            kubectl rollout restart deployment my-k8s-deployment
+
+workflows:
+  version: 2
+  build-deploy:
+    jobs:
+      - build
+      - deploy:
+          requires:
+            - build
+          context: circleci-agent
