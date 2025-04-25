@@ -7,6 +7,6 @@ const server = http.createServer((req, res) => {
     res.end('Image docker dev sur environement Dev\n');
 });
 
-server.listen(3000, () => {
-    console.log('Server running at http://localhost:3000/');
+server.listen(3000, () => { 
+    console.log('Server running');
 });
