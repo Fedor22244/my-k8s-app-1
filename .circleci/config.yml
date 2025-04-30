@@ -14,12 +14,12 @@ jobs:
       - run:
           name: Build Docker Image
           command: |
-            docker build -t dancegep/my-k8s-app:dev .
+            docker build -t fedor521/my-k8s-app:dev .
       - run:
           name: Push Docker Image
           command: |
             docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
-            docker push dancegep/my-k8s-app:dev
+            docker push fedor521/my-k8s-app:dev
   deploy:
     docker:
       - image: python:3.8
@@ -34,4 +34,4 @@ jobs:
       - run:
           name: Deploy to Kubernetes
           command: |
-            kubectl set image deployment/my-k8s-deployment my-k8s-app=dancegep/my-k8s-app:dev
+            kubectl set image deployment/my-k8s-deployment my-k8s-app=fedor521/my-k8s-app:dev
