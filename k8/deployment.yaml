@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: my-k8s-deployment
+  name: my-k8s-app
   namespace: dev
   annotations:
       circleci.com/project-id: 4bc1a2fc-fea8-40ca-b05f-d9ef434d455c
