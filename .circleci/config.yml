@@ -18,8 +18,8 @@ jobs:
       - run:
           name: Push Docker Image
           command: |
-            docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
-            docker push dancegep/my-k8s-app:qa
+            echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_USERNAME --password-stdin
+            docker push fedor521/my-k8s-app:qa
   deploy:
     docker:
       - image: python:3.8
